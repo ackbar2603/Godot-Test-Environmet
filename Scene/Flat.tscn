@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://xlpevpdo2tec"]
+
+[ext_resource type="Texture2D" uid="uid://cmph3ygos5vnb" path="res://Assets/sky_19_2k.png" id="1_q20vu"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_q583n"]
+panorama = ExtResource("1_q20vu")
+
+[sub_resource type="Sky" id="Sky_q20vu"]
+sky_material = SubResource("PanoramaSkyMaterial_q583n")
+
+[sub_resource type="Environment" id="Environment_q583n"]
+background_mode = 2
+sky = SubResource("Sky_q20vu")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s814s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s814s"]
+size = Vector3(2.2322998, 0.48632813, 2.4134521)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s814s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q20vu"]
+
+[node name="Flat world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_q583n")
+
+[node name="Flat Terrain" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("PlaneMesh_s814s")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Flat Terrain"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Flat Terrain/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0927124, -0.25683594, 0.1281128)
+shape = SubResource("BoxShape3D_s814s")
+
+[node name="Box" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9334593, 0)
+
+[node name="Cube" type="MeshInstance3D" parent="Box"]
+mesh = SubResource("BoxMesh_s814s")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Box"]
+shape = SubResource("BoxShape3D_q20vu")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.85583407, 0.5172505, 0, -0.5172505, 0.85583407, 0, 3.6750278, 5.6904964)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.50295967, 0.8643099, 0, -0.8643099, -0.50295967, 0, 7.4429445, -4.0521154)
+light_color = Color(0.81960785, 0.81960785, 0.81960785, 1)
